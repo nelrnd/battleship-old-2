@@ -56,4 +56,37 @@ export class Grid {
       return squares.every(cb);
     }
   }
+
+  placeShip(ship, x, y, direction) {
+    const squares = this.getSquares(ship.length, x, y, direction);
+    if (this.checkSquaresValidity(squares, ship) === true) {
+      if (ship.isPlaced) {
+        this.removeShip(ship);
+      }
+      for (const square of squares) {
+        square.ship = ship;
+      }
+      ship.x = x;
+      ship.y = y;
+      ship.direction = direction;
+      this.placedShips.push(ship);
+    }
+  }
+
+  removeShip(ship) {
+    const squares = this.getSquares(
+      ship.length,
+      ship.x,
+      ship.y,
+      ship.direction
+    );
+    for (const square of squares) {
+      square.ship = undefined;
+    }
+    ship.x = undefined;
+    ship.y = undefined;
+    ship.direction = undefined;
+    let shipIndex = this.placedShips.findIndex((s) => s === ship);
+    this.placedShips.splice(shipIndex, 1);
+  }
 }

@@ -1,4 +1,5 @@
 import { Grid } from '../classes/grid.js';
+import { Ship } from '../classes/ship.js';
 
 test('Creating grid', () => {
   const grid = new Grid();
@@ -43,4 +44,34 @@ test('Checking invalid squares', () => {
   const grid = new Grid();
   const squares = grid.getSquares(5, 7, 8, 'h');
   expect(grid.checkSquaresValidity(squares)).toBe(false);
+});
+
+test('Placing a ship', () => {
+  const grid = new Grid();
+  const ship = new Ship(4);
+  grid.placeShip(ship, 3, 3, 'h');
+  expect(ship.isPlaced).toBe(true);
+  expect(grid.placedShips.length).toBe(1);
+  expect(grid.findSquare(3, 3).ship).toBeTruthy();
+  expect(grid.findSquare(6, 3).ship).toBeTruthy();
+});
+
+test('Removing a ship', () => {
+  const grid = new Grid();
+  const ship = new Ship(3);
+  grid.placeShip(ship, 3, 3, 'h');
+  grid.removeShip(ship);
+  expect(ship.isPlaced).toBe(false);
+  expect(grid.placedShips.length).toBe(0);
+  expect(grid.findSquare(3, 3).ship).toBeUndefined();
+  expect(grid.findSquare(6, 3).ship).toBeUndefined();
+});
+
+test('Moving a ship', () => {
+  const grid = new Grid();
+  const ship = new Ship(4);
+  grid.placeShip(ship, 3, 3, 'h');
+  grid.placeShip(ship, 5, 4, 'v');
+  expect(grid.findSquare(5, 4).ship).toBeTruthy();
+  expect(grid.findSquare(5, 7).ship).toBeTruthy();
 });
