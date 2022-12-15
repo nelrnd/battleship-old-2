@@ -1,3 +1,11 @@
+:root {
+  --main-color: #969696;
+  --secondary-color: #d9d9d9;
+
+  --grid-size: 500px;
+  --square-size: calc(var(--gridSize) / 10);
+}
+
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
