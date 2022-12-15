@@ -32,4 +32,28 @@ export class Grid {
       square.left = this.findSquare(x - 1, y, grid);
     }
   }
+
+  getSquares(length, x, y, direction) {
+    const squares = [];
+    let square = this.findSquare(x, y);
+    for (let i = 0; i < length; i++) {
+      if (square) {
+        squares.push(square);
+        square = direction === 'h' ? square.right : square.bottom;
+      } else {
+        squares.push(undefined);
+      }
+    }
+    return squares;
+  }
+
+  checkSquaresValidity(squares, ship) {
+    if (ship) {
+      const cb = (square) => square && (!square.ship || square.ship === ship);
+      return squares.every(cb);
+    } else {
+      const cb = (square) => square && !square.ship;
+      return squares.every(cb);
+    }
+  }
 }
