@@ -1,9 +1,17 @@
+import {
+  createGridElem,
+  insertShipElem,
+  positionShipElem,
+  rotateShipElem,
+} from '../dom.js';
+
 export let gridSize = 10;
 
 export class Grid {
   constructor(size) {
     this.grid = this.createGrid(size);
     this.placedShips = [];
+    this.elem = createGridElem(this.grid);
   }
 
   createGrid(size = gridSize) {
@@ -18,8 +26,8 @@ export class Grid {
     return grid;
   }
 
-  get length() {
-    this.grid.length;
+  get size() {
+    return Math.sqrt(this.grid.length);
   }
 
   findSquare(x, y, grid = this.grid) {
@@ -61,7 +69,7 @@ export class Grid {
     }
   }
 
-  placeShip(ship, x, y, direction) {
+  placeShip(ship, x, y, direction = 'h') {
     const squares = this.getSquares(ship.length, x, y, direction);
     if (this.checkSquaresValidity(squares, ship) === true) {
       if (ship.isPlaced) {
@@ -70,11 +78,17 @@ export class Grid {
       for (const square of squares) {
         square.ship = ship;
       }
-      ship.x = x;
-      ship.y = y;
-      ship.direction = direction;
       this.placedShips.push(ship);
+
+      ship.place(x, y, direction);
+      insertShipElem(ship.elem, this.elem);
+      positionShipElem(ship.elem, x, y, this.elem, this.size);
     }
+  }
+
+  rotateShip(ship) {
+    const newDirection = ship.direction === 'h' ? 'v' : 'h';
+    this.placeShip(ship, ship.x, ship.y, newDirection);
   }
 
   removeShip(ship) {
@@ -87,9 +101,7 @@ export class Grid {
     for (const square of squares) {
       square.ship = undefined;
     }
-    ship.x = undefined;
-    ship.y = undefined;
-    ship.direction = undefined;
+    ship.remove();
     let shipIndex = this.placedShips.findIndex((s) => s === ship);
     this.placedShips.splice(shipIndex, 1);
   }

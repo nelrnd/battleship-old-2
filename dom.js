@@ -1,5 +1,3 @@
-import { gridSize } from './classes/grid.js';
-
 const page = document.querySelector('main');
 
 const displayElem = (elem) => {
@@ -41,15 +39,20 @@ const insertShipElem = (shipElem, gridElem) => {
   gridElem.appendChild(shipElem);
 };
 
-const positionShipElem = (shipElem, x, y) => {
-  const grid = document.querySelector('.grid');
-  const rect = grid.getBoundingClientRect();
-
-  const posX = (rect.width / gridSize) * x;
-  const posY = (rect.height / gridSize) * y;
+const positionShipElem = (shipElem, x, y, gridElem, gridSize) => {
+  const gridWidth = gridElem.offsetWidth;
+  const gridHeight = gridElem.offsetHeight;
+  const posX = (gridWidth / gridSize) * x;
+  const posY = (gridHeight / gridSize) * y;
 
   shipElem.style.left = posX + 'px';
   shipElem.style.top = posY + 'px';
+};
+
+const rotateShipElem = (shipElem, direction) => {
+  shipElem.classList.remove('horizontal');
+  shipElem.classList.remove('vertical');
+  shipElem.classList.add(direction === 'h' ? 'horizontal' : 'vertical');
 };
 
 export {
@@ -59,4 +62,5 @@ export {
   createShipElem,
   insertShipElem,
   positionShipElem,
+  rotateShipElem,
 };

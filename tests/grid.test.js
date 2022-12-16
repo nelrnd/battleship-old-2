@@ -75,3 +75,12 @@ test('Moving a ship', () => {
   expect(grid.findSquare(5, 4).ship).toBeTruthy();
   expect(grid.findSquare(5, 7).ship).toBeTruthy();
 });
+
+test('Rotating a ship', () => {
+  const grid = new Grid();
+  const ship = new Ship(3);
+  grid.placeShip(ship, 2, 2, 'h');
+  grid.rotateShip(ship);
+  expect(grid.findSquare(4, 2).ship).toBeUndefined();
+  expect(grid.findSquare(2, 4).ship).toBeTruthy();
+});

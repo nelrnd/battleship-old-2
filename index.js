@@ -1,23 +1,20 @@
 import { Grid } from './classes/grid.js';
 import { Ship } from './classes/ship.js';
-import {
-  displayElem,
-  createGridElem,
-  createShipElem,
-  insertShipElem,
-  positionShipElem,
-} from './dom.js';
+import { displayElem } from './dom.js';
 
 const grid = new Grid();
-const gridElem = createGridElem(grid.grid);
+displayElem(grid.elem);
 
-const ship = new Ship(4);
+const ship = new Ship(5);
+grid.placeShip(ship, 2, 2, 'v');
+grid.placeShip(new Ship(3), 7, 2);
+grid.rotateShip(ship);
+grid.placeShip(ship, 3, 5, 'v');
 
-grid.placeShip(ship, 3, 3, 'v');
+const button = document.createElement('button');
+button.textContent = 'Rotate';
+button.onclick = function () {
+  grid.rotateShip(ship);
+};
 
-const shipElem = createShipElem(ship);
-
-displayElem(gridElem);
-displayElem(shipElem);
-insertShipElem(shipElem, gridElem);
-positionShipElem(shipElem, 3, 6);
+document.querySelector('main').appendChild(button);
