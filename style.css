@@ -3,9 +3,51 @@
   --secondary-color: #d9d9d9;
 
   --grid-size: 500px;
-  --square-size: calc(var(--gridSize) / 10);
+  --square-size: calc(var(--grid-size) / 10);
+  --grid-length: 10;
 }
 
 * {
   font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: var(--secondary-color);
+}
+
+.grid {
+  width: var(--grid-size);
+  height: var(--grid-size);
+  background-color: white;
+  border: solid 1px black;
+  box-sizing: border-box;
+  position: relative;
+
+  display: grid;
+  grid-template-columns: repeat(var(--grid-length), auto);
+  grid-template-rows: repeat(var(--grid-length), auto);
+}
+
+.square {
+  width: var(--square-size);
+  height: var(--square-size);
+  border: solid 1px black;
+  box-sizing: border-box;
+}
+
+.ship-square {
+  background-color: var(--main-color);
+}
+
+.ship {
+  position: absolute;
+  outline: solid 1px black;
+  display: grid;
+  box-sizing: border-box;
+}
+.ship.horizontal {
+  grid-auto-flow: column;
+}
+.ship.vertical {
+  grid-auto-flow: row;
 }

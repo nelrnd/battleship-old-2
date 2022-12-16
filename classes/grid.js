@@ -1,4 +1,4 @@
-let gridSize = 10;
+export let gridSize = 10;
 
 export class Grid {
   constructor(size) {
@@ -16,6 +16,10 @@ export class Grid {
     }
     this.linkSquares(grid);
     return grid;
+  }
+
+  get length() {
+    this.grid.length;
   }
 
   findSquare(x, y, grid = this.grid) {

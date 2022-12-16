@@ -1,6 +1,14 @@
+import { gridSize } from './classes/grid.js';
+
+const page = document.querySelector('main');
+
+const displayElem = (elem) => {
+  page.appendChild(elem);
+};
+
 const createSquareElem = (ship) => {
   const squareElem = document.createElement('div');
-  squareElem.className = ship ? 'ship-square' : 'square';
+  squareElem.className = ship ? 'square ship-square' : 'square';
   return squareElem;
 };
 
@@ -24,8 +32,31 @@ const createShipElem = (ship) => {
     shipElem.appendChild(squareElem);
   }
   // set ship elem direction
-  shipElem.classList.add(ship.direction);
+  const direction = ship.direction || 'h';
+  shipElem.classList.add(direction === 'h' ? 'horizontal' : 'vertical');
   return shipElem;
 };
 
-export { createSquareElem, createGridElem, createShipElem };
+const insertShipElem = (shipElem, gridElem) => {
+  gridElem.appendChild(shipElem);
+};
+
+const positionShipElem = (shipElem, x, y) => {
+  const grid = document.querySelector('.grid');
+  const rect = grid.getBoundingClientRect();
+
+  const posX = (rect.width / gridSize) * x;
+  const posY = (rect.height / gridSize) * y;
+
+  shipElem.style.left = posX + 'px';
+  shipElem.style.top = posY + 'px';
+};
+
+export {
+  displayElem,
+  createSquareElem,
+  createGridElem,
+  createShipElem,
+  insertShipElem,
+  positionShipElem,
+};
