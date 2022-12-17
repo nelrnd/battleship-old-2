@@ -2,16 +2,14 @@ import { createGridElem, insertShipElem, positionShipElem } from '../dom.js';
 import { getRandomCoord, getRandomBool } from '../utils.js';
 import { fleet, Ship } from './ship.js';
 
-export let gridSize = 10;
-
 export class Grid {
   constructor(size) {
     this.grid = this.create(size);
     this.placedShips = [];
-    this.elem = createGridElem(this.grid);
+    this.elem = createGridElem(this.grid, this.size);
   }
 
-  create(size = gridSize) {
+  create(size = 10) {
     const grid = [];
     for (let i = 0; i < size * size; i++) {
       const square = {};

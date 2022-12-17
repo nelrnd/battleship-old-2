@@ -3,7 +3,7 @@
   --secondary-color: #d9d9d9;
 
   --grid-size: 750px;
-  --square-size: calc(var(--grid-size) / 10);
+  --square-size: calc(var(--grid-size) / var(--grid-length));
   --grid-length: 10;
 }
 

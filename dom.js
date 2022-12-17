@@ -10,9 +10,20 @@ const createSquareElem = (ship) => {
   return squareElem;
 };
 
-const createGridElem = (grid) => {
+const createGridElem = (grid, size) => {
   const gridElem = document.createElement('div');
   gridElem.className = 'grid';
+
+  // if grid size is different than default
+  if (size !== 10) {
+    // adjust the grid elem size
+    gridElem.style.setProperty('--grid-length', size);
+    gridElem.style.setProperty(
+      '--square-size',
+      'calc(var(--grid-size) / var(--grid-length))'
+    );
+  }
+
   // populate grid with squares
   for (const square of grid) {
     const squareElem = createSquareElem();
