@@ -93,7 +93,24 @@ test('Populate grid randomy', () => {
 
 test('Clearing a grid', () => {
   const grid = new Grid();
+  const ship = new Ship(3);
   grid.populate();
+  grid.placeShip(ship, 0, 0, 'v');
   grid.clear();
   expect(grid.placedShips.length).toBe(0);
+  expect(ship.isPlaced).toBe(false);
+});
+
+test('Getting random valid coords', () => {
+  const grid = new Grid();
+  const ship = new Ship(3);
+  grid.populate();
+  const coords = grid.getRandomCoords(ship.length);
+  const squares = grid.getSquares(
+    ship.length,
+    coords.x,
+    coords.y,
+    coords.direction
+  );
+  expect(grid.checkSquaresValidity(squares));
 });

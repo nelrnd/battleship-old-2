@@ -2,7 +2,7 @@
   --main-color: #969696;
   --secondary-color: #d9d9d9;
 
-  --grid-size: 1000px;
+  --grid-size: 750px;
   --square-size: calc(var(--grid-size) / 10);
   --grid-length: 10;
 }
