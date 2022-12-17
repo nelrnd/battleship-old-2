@@ -101,10 +101,13 @@ const checkIfNewGridCoords = () => {
 };
 
 const makeShipMoveable = (ship, grid) => {
+  let hasMoved = false;
+
   const dragStart = (event) => {
     getGridCoords(event, ship.elem, grid.size);
     document.addEventListener('mousemove', dragShip);
     document.addEventListener('mouseup', dragEnd);
+    document.addEventListener('mouseup', rotateShip);
   };
 
   const dragShip = (event) => {
@@ -114,6 +117,13 @@ const makeShipMoveable = (ship, grid) => {
         grid.placeShip(ship, x, y, ship.direction);
       }
     }
+    hasMoved = true;
+  };
+
+  const rotateShip = () => {
+    if (!hasMoved) grid.rotateShip(ship);
+    document.removeEventListener('mouseup', rotateShip);
+    hasMoved = false;
   };
 
   const dragEnd = () => {
@@ -132,6 +142,4 @@ export {
   positionShipElem,
   rotateShipElem,
   makeShipMoveable,
-  getGridCoords,
-  checkIfPointerOnGrid,
 };
