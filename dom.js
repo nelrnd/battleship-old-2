@@ -132,4 +132,6 @@ export {
   positionShipElem,
   rotateShipElem,
   makeShipMoveable,
+  getGridCoords,
+  checkIfPointerOnGrid,
 };

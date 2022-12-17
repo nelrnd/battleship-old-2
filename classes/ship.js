@@ -25,7 +25,11 @@ export class Ship {
   }
 
   get isPlaced() {
-    return !!(this.x && this.y && this.direction);
+    return (
+      this.x !== undefined &&
+      this.y !== undefined &&
+      this.direction !== undefined
+    );
   }
 
   place(x, y, direction) {

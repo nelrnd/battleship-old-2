@@ -1,3 +1,4 @@
+import { Grid } from '../classes/grid.js';
 import { Ship } from '../classes/ship.js';
 
 test('Creating a ship', () => {
@@ -21,5 +22,12 @@ test('Checking if ship is placed', () => {
   ship.x = 3;
   ship.y = 4;
   ship.direction = 'h';
+  expect(ship.isPlaced).toBe(true);
+});
+
+test('Checking if ship is placed 2', () => {
+  const grid = new Grid();
+  const ship = new Ship(3);
+  grid.placeShip(ship, 0, 0, 'h');
   expect(ship.isPlaced).toBe(true);
 });
