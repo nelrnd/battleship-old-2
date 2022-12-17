@@ -4,6 +4,8 @@ const displayElem = (elem) => {
   page.appendChild(elem);
 };
 
+const clearPage = () => (page.innerHTML = null);
+
 const createSquareElem = (ship) => {
   const squareElem = document.createElement('div');
   squareElem.className = ship ? 'square ship-square' : 'square';
@@ -157,6 +159,7 @@ const getSquareIndex = (event, ship) => {
 
 export {
   displayElem,
+  clearPage,
   createSquareElem,
   createGridElem,
   createShipElem,

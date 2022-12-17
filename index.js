@@ -1,22 +1,9 @@
 import { Grid } from './classes/grid.js';
+import { Computer, Human } from './classes/players.js';
 import { displayElem } from './dom.js';
 
-const grid = new Grid();
-displayElem(grid.elem);
+const player1 = new Human('Joe');
+const player2 = new Computer();
 
-const populateBtn = document.createElement('button');
-populateBtn.textContent = 'Random';
-populateBtn.onclick = function () {
-  grid.populate();
-};
-
-const clearBtn = document.createElement('button');
-clearBtn.textContent = 'Clear';
-clearBtn.onclick = function () {
-  grid.clear();
-};
-
-document.querySelector('main').appendChild(populateBtn);
-document.querySelector('main').appendChild(clearBtn);
-
-grid.populate();
+player1.placeShips();
+player2.placeShips();
