@@ -5,16 +5,32 @@ import { displayElem } from './dom.js';
 const grid = new Grid();
 displayElem(grid.elem);
 
+/*
 const ship = new Ship(5);
 grid.placeShip(ship, 2, 2, 'v');
 grid.placeShip(new Ship(3), 7, 2);
 grid.rotateShip(ship);
 grid.placeShip(ship, 3, 5, 'v');
+*/
 
-const button = document.createElement('button');
-button.textContent = 'Rotate';
-button.onclick = function () {
+const rotateBtn = document.createElement('button');
+rotateBtn.textContent = 'Rotate';
+rotateBtn.onclick = function () {
   grid.rotateShip(ship);
 };
 
-document.querySelector('main').appendChild(button);
+const populateBtn = document.createElement('button');
+populateBtn.textContent = 'Random';
+populateBtn.onclick = function () {
+  grid.populate();
+};
+
+const clearBtn = document.createElement('button');
+clearBtn.textContent = 'Clear';
+clearBtn.onclick = function () {
+  grid.clear();
+};
+
+document.querySelector('main').appendChild(populateBtn);
+document.querySelector('main').appendChild(rotateBtn);
+document.querySelector('main').appendChild(clearBtn);

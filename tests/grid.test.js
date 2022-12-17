@@ -84,3 +84,16 @@ test('Rotating a ship', () => {
   expect(grid.findSquare(4, 2).ship).toBeUndefined();
   expect(grid.findSquare(2, 4).ship).toBeTruthy();
 });
+
+test('Populate grid randomy', () => {
+  const grid = new Grid();
+  grid.populate();
+  expect(grid.placedShips.length).toBe(5);
+});
+
+test('Clearing a grid', () => {
+  const grid = new Grid();
+  grid.populate();
+  grid.clear();
+  expect(grid.placedShips.length).toBe(0);
+});

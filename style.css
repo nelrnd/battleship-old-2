@@ -2,7 +2,7 @@
   --main-color: #969696;
   --secondary-color: #d9d9d9;
 
-  --grid-size: 500px;
+  --grid-size: 1000px;
   --square-size: calc(var(--grid-size) / 10);
   --grid-length: 10;
 }
@@ -19,7 +19,7 @@ body {
   width: var(--grid-size);
   height: var(--grid-size);
   background-color: white;
-  border: solid 1px black;
+  outline: solid 1px black;
   box-sizing: border-box;
   position: relative;
 

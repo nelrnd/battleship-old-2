@@ -1,20 +1,17 @@
-import {
-  createGridElem,
-  insertShipElem,
-  positionShipElem,
-  rotateShipElem,
-} from '../dom.js';
+import { createGridElem, insertShipElem, positionShipElem } from '../dom.js';
+import { getRandomCoord, getRandomBool } from '../utils.js';
+import { fleet, Ship } from './ship.js';
 
 export let gridSize = 10;
 
 export class Grid {
   constructor(size) {
-    this.grid = this.createGrid(size);
+    this.grid = this.create(size);
     this.placedShips = [];
     this.elem = createGridElem(this.grid);
   }
 
-  createGrid(size = gridSize) {
+  create(size = gridSize) {
     const grid = [];
     for (let i = 0; i < size * size; i++) {
       const square = {};
@@ -24,6 +21,13 @@ export class Grid {
     }
     this.linkSquares(grid);
     return grid;
+  }
+
+  clear() {
+    for (let i = this.placedShips.length - 1; i >= 0; i--) {
+      const ship = this.placedShips[i];
+      this.removeShip(ship);
+    }
   }
 
   get size() {
@@ -101,8 +105,33 @@ export class Grid {
     for (const square of squares) {
       square.ship = undefined;
     }
+    ship.elem.remove();
     ship.remove();
     let shipIndex = this.placedShips.findIndex((s) => s === ship);
     this.placedShips.splice(shipIndex, 1);
+  }
+
+  populate() {
+    this.clear();
+
+    fleet.forEach((ship) => {
+      ship = new Ship(ship.length, ship.name);
+      const coords = this.getRandomCoords(ship.length);
+      this.placeShip(ship, coords.x, coords.y, coords.direction);
+    });
+  }
+
+  getRandomCoords(length) {
+    const coords = { x: null, y: null, direction: null };
+    do {
+      coords.x = getRandomCoord();
+      coords.y = getRandomCoord();
+      coords.direction = getRandomBool() ? 'h' : 'v';
+    } while (
+      this.checkSquaresValidity(
+        this.getSquares(length, coords.x, coords.y, coords.direction)
+      ) === false
+    );
+    return coords;
   }
 }
