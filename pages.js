@@ -6,15 +6,15 @@ export const pages = {
     displayElem(grid.elem);
 
     const randomizeBtn = document.createElement('button');
-    randomizeBtn.className = 'button';
+    randomizeBtn.className = 'btn';
     randomizeBtn.textContent = 'Randomize';
 
     const startBtn = document.createElement('button');
-    startBtn.className = 'button';
+    startBtn.className = 'btn';
     startBtn.textContent = 'Start game';
 
     const buttons = document.createElement('div');
-    buttons.className = 'buttons';
+    buttons.className = 'btns';
     buttons.appendChild(randomizeBtn);
     buttons.appendChild(startBtn);
 

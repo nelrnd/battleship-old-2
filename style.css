@@ -29,6 +29,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 64px;
 }
 
 .grid {
@@ -70,4 +71,17 @@ main {
 }
 .ship.vertical {
   grid-auto-flow: row;
+}
+
+.btns {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.btn {
+  font-size: 40px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 16px 24px;
 }
