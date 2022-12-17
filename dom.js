@@ -104,6 +104,7 @@ const makeShipMoveable = (ship, grid) => {
   let hasMoved = false;
 
   const dragStart = (event) => {
+    ship.elem.classList.add('active');
     getGridCoords(event, ship.elem, grid.size);
     document.addEventListener('mousemove', dragShip);
     document.addEventListener('mouseup', dragEnd);
@@ -127,6 +128,7 @@ const makeShipMoveable = (ship, grid) => {
   };
 
   const dragEnd = () => {
+    ship.elem.classList.remove('active');
     document.removeEventListener('mousemove', dragShip);
   };
 

@@ -50,7 +50,8 @@ body {
   display: grid;
   box-sizing: border-box;
 }
-.ship:active .square {
+.ship:active .square,
+.ship.active .square {
   background-color: blue;
 }
 .ship.horizontal {
