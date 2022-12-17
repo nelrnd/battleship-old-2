@@ -102,10 +102,12 @@ const checkIfNewGridCoords = () => {
 
 const makeShipMoveable = (ship, grid) => {
   let hasMoved = false;
+  let squareIndex = 0;
 
   const dragStart = (event) => {
     ship.elem.classList.add('active');
-    getGridCoords(event, ship.elem, grid.size);
+    squareIndex = getSquareIndex(event, ship);
+
     document.addEventListener('mousemove', dragShip);
     document.addEventListener('mouseup', dragEnd);
     document.addEventListener('mouseup', rotateShip);
@@ -113,7 +115,8 @@ const makeShipMoveable = (ship, grid) => {
 
   const dragShip = (event) => {
     if (checkIfPointerOnGrid(event, grid.elem)) {
-      const [x, y] = getGridCoords(event, grid.elem, grid.size);
+      let [x, y] = getGridCoords(event, grid.elem, grid.size);
+      ship.direction === 'h' ? (x -= squareIndex) : (y -= squareIndex);
       if (checkIfNewGridCoords()) {
         grid.placeShip(ship, x, y, ship.direction);
       }
@@ -133,6 +136,23 @@ const makeShipMoveable = (ship, grid) => {
   };
 
   ship.elem.addEventListener('mousedown', dragStart);
+};
+
+const makeShipUnmoveable = (ship) => {
+  ship.elem.removeEventListener('mousedown', dragStart);
+};
+
+const getSquareIndex = (event, ship) => {
+  const rect = ship.elem.getBoundingClientRect();
+  if (ship.direction === 'h') {
+    const leftDist = event.clientX - rect.left;
+    const fromSquare = Math.floor((leftDist * ship.length) / rect.width);
+    return fromSquare;
+  } else if (ship.direction === 'v') {
+    const topDist = event.clientY - rect.top;
+    const fromSquare = Math.floor((topDist * ship.length) / rect.height);
+    return fromSquare;
+  }
 };
 
 export {
