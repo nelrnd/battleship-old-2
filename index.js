@@ -1,5 +1,10 @@
 import { Grid } from './classes/grid.js';
-import { displayElem } from './dom.js';
+import {
+  checkIfNewGridCoords,
+  checkIfPointerOnGrid,
+  displayElem,
+  getGridCoords,
+} from './dom.js';
 
 const grid = new Grid();
 displayElem(grid.elem);
@@ -25,3 +30,12 @@ clearBtn.onclick = function () {
 document.querySelector('main').appendChild(populateBtn);
 document.querySelector('main').appendChild(rotateBtn);
 document.querySelector('main').appendChild(clearBtn);
+
+document.addEventListener('mousemove', (event) => {
+  if (checkIfPointerOnGrid(event, grid.elem)) {
+    const [x, y] = getGridCoords(event, grid.elem, grid.size);
+    if (checkIfNewGridCoords()) {
+      console.log(x, y);
+    }
+  }
+});
