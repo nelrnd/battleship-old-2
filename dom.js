@@ -100,6 +100,29 @@ const checkIfNewGridCoords = () => {
   }
 };
 
+const makeShipMoveable = (ship, grid) => {
+  const dragStart = (event) => {
+    getGridCoords(event, ship.elem, grid.size);
+    document.addEventListener('mousemove', dragShip);
+    document.addEventListener('mouseup', dragEnd);
+  };
+
+  const dragShip = (event) => {
+    if (checkIfPointerOnGrid(event, grid.elem)) {
+      const [x, y] = getGridCoords(event, grid.elem, grid.size);
+      if (checkIfNewGridCoords()) {
+        grid.placeShip(ship, x, y, ship.direction);
+      }
+    }
+  };
+
+  const dragEnd = () => {
+    document.removeEventListener('mousemove', dragShip);
+  };
+
+  ship.elem.addEventListener('mousedown', dragStart);
+};
+
 export {
   displayElem,
   createSquareElem,
@@ -108,7 +131,5 @@ export {
   insertShipElem,
   positionShipElem,
   rotateShipElem,
-  getGridCoords,
-  checkIfPointerOnGrid,
-  checkIfNewGridCoords,
+  makeShipMoveable,
 };
