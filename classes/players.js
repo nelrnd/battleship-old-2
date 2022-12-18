@@ -1,4 +1,3 @@
-import { pages } from '../pages.js';
 import { Grid } from './grid.js';
 
 export class Human {
@@ -10,7 +9,6 @@ export class Human {
 
   placeShips() {
     this.grid.populate();
-    pages.placeShips(this.grid);
   }
 }
 

@@ -4,6 +4,13 @@ const displayElem = (elem) => {
   page.appendChild(elem);
 };
 
+const displayGrid = (grid) => {
+  page.appendChild(grid.elem);
+  grid.placedShips.forEach((ship) => {
+    positionShipElem(ship.elem, ship.x, ship.y, grid.elem, grid.size);
+  });
+};
+
 const clearPage = () => (page.innerHTML = null);
 
 const createSquareElem = (ship) => {
@@ -159,6 +166,7 @@ const getSquareIndex = (event, ship) => {
 
 export {
   displayElem,
+  displayGrid,
   clearPage,
   createSquareElem,
   createGridElem,
