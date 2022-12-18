@@ -62,11 +62,11 @@ const insertShipElem = (shipElem, gridElem) => {
 const positionShipElem = (shipElem, x, y, gridElem, gridSize) => {
   const gridWidth = gridElem.offsetWidth;
   const gridHeight = gridElem.offsetHeight;
-  const posX = (gridWidth / gridSize) * x;
-  const posY = (gridHeight / gridSize) * y;
+  const posX = ((gridWidth / gridSize) * x * 100) / gridWidth;
+  const posY = ((gridHeight / gridSize) * y * 100) / gridHeight;
 
-  shipElem.style.left = posX + 'px';
-  shipElem.style.top = posY + 'px';
+  shipElem.style.left = posX + '%';
+  shipElem.style.top = posY + '%';
 };
 
 const rotateShipElem = (shipElem, direction) => {
