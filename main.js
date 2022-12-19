@@ -3,6 +3,7 @@ import {
   displayGameboard,
   displayPlaceShips,
   makeShipMoveable,
+  makeShipUnmoveable,
 } from './dom.js';
 
 const players = [];
@@ -47,7 +48,7 @@ const startGame = () => {
   displayGameboard(players[0].grid, players[1].grid);
   // Make player's ships not moveable anymore
   for (const ship of players[0].grid.placedShips) {
-    makeShipMoveable(ship, players[0].grid, false);
+    makeShipUnmoveable(ship);
   }
   // Set player 1 as first turn
   setFirstTurn();

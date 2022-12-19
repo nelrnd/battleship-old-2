@@ -1,4 +1,4 @@
-import { startGame } from './main.js';
+import { players, startGame } from './main.js';
 
 const page = document.querySelector('main');
 
@@ -111,52 +111,70 @@ const checkIfNewGridCoords = () => {
   }
 };
 
-const makeShipMoveable = (ship, grid, moveable) => {
-  let hasMoved = false;
-  let squareIndex = 0;
-
-  const dragStart = (event) => {
-    ship.elem.classList.add('active');
-    squareIndex = getSquareIndex(event, ship);
-
-    document.addEventListener('mousemove', dragShip);
-    document.addEventListener('mouseup', dragEnd);
-    document.addEventListener('mouseup', rotateShip);
-  };
-
-  const dragShip = (event) => {
-    if (checkIfPointerOnGrid(event, grid.elem)) {
-      let [x, y] = getGridCoords(event, grid.elem, grid.size);
-      ship.direction === 'h' ? (x -= squareIndex) : (y -= squareIndex);
-      if (checkIfNewGridCoords()) {
-        grid.placeShip(ship, x, y, ship.direction);
-      }
-    }
-    hasMoved = true;
-  };
-
-  const rotateShip = () => {
-    if (!hasMoved) grid.rotateShip(ship);
-    document.removeEventListener('mouseup', rotateShip);
-    hasMoved = false;
-  };
-
-  const dragEnd = () => {
-    ship.elem.classList.remove('active');
-    document.removeEventListener('mousemove', dragShip);
-  };
-
+const makeShipMoveable = (ship) => {
   ship.elem.addEventListener('mousedown', dragStart);
-
-  if (moveable === false) {
-    ship.elem.removeEventListener('mousedown', dragStart);
-    document.removeEventListener('mousemove', dragShip);
-    console.log('called');
-  }
 };
 
 const makeShipUnmoveable = (ship) => {
-  ship.elem.removeEvent;
+  ship.elem.removeEventListener('mousedown', dragStart);
+};
+
+// Dragging and rotating ship elems
+
+let hasMoved = false;
+let squareIndex = 0;
+
+// current ship and grid
+let ship = null;
+let grid = null;
+
+const dragStart = (event) => {
+  ship = getShip(event);
+  grid = getGrid(event);
+
+  ship.elem.classList.add('active');
+  squareIndex = getSquareIndex(event, ship);
+
+  document.addEventListener('mousemove', dragShip);
+  document.addEventListener('mouseup', rotateShip);
+  document.addEventListener('mouseup', dragEnd);
+};
+
+const dragShip = (event) => {
+  if (checkIfPointerOnGrid(event, grid.elem)) {
+    let [x, y] = getGridCoords(event, grid.elem, grid.size);
+    ship.direction === 'h' ? (x -= squareIndex) : (y -= squareIndex);
+    if (checkIfNewGridCoords()) {
+      grid.placeShip(ship, x, y, ship.direction);
+    }
+  }
+
+  hasMoved = true;
+};
+
+const rotateShip = () => {
+  if (hasMoved === false) grid.rotateShip(ship);
+  document.removeEventListener('mouseup', rotateShip);
+  hasMoved = false;
+};
+
+const dragEnd = () => {
+  ship.elem.classList.remove('active');
+  document.removeEventListener('mousemove', dragShip);
+  document.removeEventListener('mouseup', dragEnd);
+  ship = null;
+  grid = null;
+};
+
+const getShip = (event) => {
+  const shipElem = event.target.parentNode;
+  const grid = getGrid(event);
+  return grid.placedShips.find((ship) => ship.elem === shipElem);
+};
+
+const getGrid = (event) => {
+  const gridElem = event.target.parentNode.parentNode;
+  return players.find((player) => player.grid.elem === gridElem).grid;
 };
 
 const getSquareIndex = (event, ship) => {
@@ -215,6 +233,7 @@ export {
   positionShipElem,
   rotateShipElem,
   makeShipMoveable,
+  makeShipUnmoveable,
   displayPlaceShips,
   displayGameboard,
 };
