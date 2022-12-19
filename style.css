@@ -2,7 +2,7 @@
   --main-color: #969696;
   --secondary-color: #d9d9d9;
 
-  --grid-size: 80vmin;
+  --grid-size: 750px;
   --square-size: calc(var(--grid-size) / var(--grid-length));
   --grid-length: 10;
 }
@@ -62,7 +62,6 @@ main {
   display: grid;
   box-sizing: border-box;
 }
-.ship:active .square,
 .ship.active .square {
   background-color: blue;
 }

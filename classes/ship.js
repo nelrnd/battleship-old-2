@@ -48,4 +48,9 @@ export class Ship {
   updateDirection() {
     rotateShipElem(this.elem, this.direction);
   }
+
+  reset() {
+    this.nbOfHit = 0;
+    this.remove();
+  }
 }

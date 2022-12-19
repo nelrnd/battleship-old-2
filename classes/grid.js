@@ -114,19 +114,26 @@ export class Grid {
     this.placedShips.splice(shipIndex, 1);
 
     ship.remove();
-    ship.elem.remove();
   }
 
   populate() {
-    this.clear();
-
-    fleet.forEach((ship) => {
-      ship = new Ship(ship.length, ship.name);
-      const coords = this.getRandomCoords(ship.length);
-      this.placeShip(ship, coords.x, coords.y, coords.direction);
-    });
-
-    this.placedShips.forEach((ship) => makeShipMoveable(ship, this));
+    if (this.placedShips.length === 5) {
+      const ships = [...this.placedShips];
+      this.placedShips.forEach((ship) => {
+        this.removeShip(ship);
+        ship.reset();
+      });
+      ships.forEach((ship) => {
+        const coords = this.getRandomCoords(ship.length);
+        this.placeShip(ship, coords.x, coords.y, coords.direction);
+      });
+    } else {
+      fleet.forEach((ship) => {
+        ship = new Ship(ship.length, ship.name);
+        const coords = this.getRandomCoords(ship.length);
+        this.placeShip(ship, coords.x, coords.y, coords.direction);
+      });
+    }
   }
 
   getRandomCoords(length) {
@@ -141,5 +148,15 @@ export class Grid {
       ) === false
     );
     return coords;
+  }
+
+  receiveAttack(x, y) {
+    const location = this.findSquare(x, y);
+    if (location && !location.shot) {
+      location.shot = true;
+      if (location.ship) {
+        location.ship.hit();
+      }
+    }
   }
 }

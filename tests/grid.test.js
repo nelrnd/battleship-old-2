@@ -114,3 +114,13 @@ test('Getting random valid coords', () => {
   );
   expect(grid.checkSquaresValidity(squares));
 });
+
+test('Attacking a grid', () => {
+  const grid = new Grid();
+  const ship = new Ship(3);
+  grid.placeShip(ship, 2, 2, 'v');
+  grid.receiveAttack(2, 2);
+  grid.receiveAttack(2, 3);
+  grid.receiveAttack(2, 4);
+  expect(ship.isSunk).toBe(true);
+});

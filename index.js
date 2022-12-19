@@ -1,6 +1,11 @@
 import { Grid } from './classes/grid.js';
 import { Computer, Human } from './classes/players.js';
-import { clearPage, displayElem, displayGrid } from './dom.js';
+import {
+  clearPage,
+  displayElem,
+  displayGrid,
+  makeShipMoveable,
+} from './dom.js';
 
 window.addEventListener('load', () => {
   const player1 = new Human('Joe');
@@ -12,6 +17,10 @@ window.addEventListener('load', () => {
   const setShips = (grid) => {
     clearPage();
     displayGrid(grid);
+
+    for (const ship of grid.placedShips) {
+      makeShipMoveable(ship, grid);
+    }
 
     const randomizeBtn = document.createElement('button');
     randomizeBtn.onclick = () => grid.populate();
