@@ -1,4 +1,9 @@
-import { Computer, Human } from './classes/players';
+import { Computer, Human } from './classes/players.js';
+import {
+  displayGameboard,
+  displayPlaceShips,
+  makeShipMoveable,
+} from './dom.js';
 
 const players = [];
 const turn = [];
@@ -7,6 +12,14 @@ const createPlayers = () => {
   players.length = 0;
   players.push(new Human());
   players.push(new Computer());
+};
+
+const setShips = () => {
+  players.forEach((player) => {
+    player.placeShips();
+  });
+
+  displayPlaceShips(players[0].grid);
 };
 
 const setFirstTurn = () => {
@@ -27,4 +40,27 @@ const playTurn = (player) => {
     // make computer grid unplayable
     player.playTurn();
   }
+};
+
+const startGame = () => {
+  // Display player grids
+  displayGameboard(players[0].grid, players[1].grid);
+  // Make player's ships not moveable anymore
+  for (const ship of players[0].grid.placedShips) {
+    makeShipMoveable(ship, players[0].grid, false);
+  }
+  // Set player 1 as first turn
+  setFirstTurn();
+  // Make computer grid playable
+  //makePlayable();
+};
+
+export {
+  createPlayers,
+  setShips,
+  setFirstTurn,
+  setNextTurn,
+  startGame,
+  players,
+  turn,
 };

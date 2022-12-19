@@ -1,3 +1,5 @@
+import { startGame } from './main.js';
+
 const page = document.querySelector('main');
 
 const displayElem = (elem) => {
@@ -109,7 +111,7 @@ const checkIfNewGridCoords = () => {
   }
 };
 
-const makeShipMoveable = (ship, grid) => {
+const makeShipMoveable = (ship, grid, moveable) => {
   let hasMoved = false;
   let squareIndex = 0;
 
@@ -144,11 +146,13 @@ const makeShipMoveable = (ship, grid) => {
     document.removeEventListener('mousemove', dragShip);
   };
 
-  ship.elem.addEventListener('mousedown', dragStart);
-};
-
-const makeShipUnmoveable = (ship) => {
-  ship.elem.removeEventListener('mousedown', dragStart);
+  if (moveable === false) {
+    ship.elem.removeEventListener('mousedown', dragStart);
+    ship.elem.style.border = 'solid 5px red';
+    dragEnd();
+  } else {
+    ship.elem.addEventListener('mousedown', dragStart);
+  }
 };
 
 const getSquareIndex = (event, ship) => {
@@ -164,6 +168,38 @@ const getSquareIndex = (event, ship) => {
   }
 };
 
+const displayPlaceShips = (grid) => {
+  clearPage();
+  displayGrid(grid);
+
+  for (const ship of grid.placedShips) {
+    makeShipMoveable(ship, grid, true);
+  }
+
+  const randomizeBtn = document.createElement('button');
+  randomizeBtn.onclick = () => grid.populate();
+  randomizeBtn.className = 'btn';
+  randomizeBtn.textContent = 'Randomize';
+
+  const startBtn = document.createElement('button');
+  startBtn.onclick = () => startGame();
+  startBtn.className = 'btn';
+  startBtn.textContent = 'Start game';
+
+  const buttons = document.createElement('div');
+  buttons.className = 'btns';
+  buttons.appendChild(randomizeBtn);
+  buttons.appendChild(startBtn);
+
+  displayElem(buttons);
+};
+
+const displayGameboard = (grid1, grid2) => {
+  clearPage();
+  displayGrid(grid1);
+  displayGrid(grid2);
+};
+
 export {
   displayElem,
   displayGrid,
@@ -175,4 +211,6 @@ export {
   positionShipElem,
   rotateShipElem,
   makeShipMoveable,
+  displayPlaceShips,
+  displayGameboard,
 };
