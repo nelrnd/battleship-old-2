@@ -123,4 +123,34 @@ test('Attacking a grid', () => {
   grid.receiveAttack(2, 3);
   grid.receiveAttack(2, 4);
   expect(ship.isSunk).toBe(true);
+  expect(grid.findSquare(2, 3).shot).toBe(true);
+});
+
+test('Checking if all ships are sunk', () => {
+  const grid = new Grid();
+  grid.placeShip(new Ship(1), 2, 2);
+  grid.placeShip(new Ship(1), 4, 4);
+  grid.placeShip(new Ship(1), 6, 6);
+  expect(grid.allShipsAreSunk()).toBe(false);
+  grid.receiveAttack(2, 2);
+  expect(grid.allShipsAreSunk()).toBe(false);
+  grid.receiveAttack(4, 4);
+  grid.receiveAttack(6, 6);
+  expect(grid.allShipsAreSunk()).toBe(true);
+});
+
+test('Checking if all ships are placed', () => {
+  const grid = new Grid();
+  const ship1 = new Ship(3);
+  const ship2 = new Ship(3);
+  const ship3 = new Ship(3);
+  const ship4 = new Ship(3);
+  const ship5 = new Ship(3);
+  expect(grid.allShipsArePlaced()).toBe(false);
+  grid.placeShip(ship1, 0, 0, 'v');
+  grid.placeShip(ship2, 2, 0, 'v');
+  grid.placeShip(ship3, 4, 0, 'v');
+  grid.placeShip(ship4, 6, 0, 'v');
+  grid.placeShip(ship5, 7, 0, 'v');
+  expect(grid.allShipsArePlaced()).toBe(true);
 });

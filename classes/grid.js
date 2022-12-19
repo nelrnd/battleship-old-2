@@ -159,4 +159,15 @@ export class Grid {
       }
     }
   }
+
+  allShipsAreSunk() {
+    return this.placedShips.every((ship) => ship.isSunk);
+  }
+
+  allShipsArePlaced() {
+    return (
+      this.placedShips.length === 5 &&
+      this.placedShips.every((ship) => ship.isPlaced)
+    );
+  }
 }
