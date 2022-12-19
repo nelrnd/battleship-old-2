@@ -146,13 +146,17 @@ const makeShipMoveable = (ship, grid, moveable) => {
     document.removeEventListener('mousemove', dragShip);
   };
 
+  ship.elem.addEventListener('mousedown', dragStart);
+
   if (moveable === false) {
     ship.elem.removeEventListener('mousedown', dragStart);
-    ship.elem.style.border = 'solid 5px red';
-    dragEnd();
-  } else {
-    ship.elem.addEventListener('mousedown', dragStart);
+    document.removeEventListener('mousemove', dragShip);
+    console.log('called');
   }
+};
+
+const makeShipUnmoveable = (ship) => {
+  ship.elem.removeEvent;
 };
 
 const getSquareIndex = (event, ship) => {
