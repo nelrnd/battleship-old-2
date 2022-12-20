@@ -10,6 +10,10 @@ export class Human {
   placeShips() {
     this.grid.populate();
   }
+
+  playTurn(x, y, opponentGrid) {
+    opponentGrid.receiveAttack(x, y);
+  }
 }
 
 export class Computer {

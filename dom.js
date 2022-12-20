@@ -195,7 +195,7 @@ const displayPlaceShips = (grid) => {
   displayGrid(grid);
 
   for (const ship of grid.placedShips) {
-    makeShipMoveable(ship, grid, true);
+    makeShipMoveable(ship);
   }
 
   const randomizeBtn = document.createElement('button');
@@ -221,6 +221,10 @@ const displayGameboard = (grid1, grid2) => {
   displayGrid(grid1);
   displayGrid(grid2);
 };
+
+const makeGridPlayable = (grid) => {
+  
+}
 
 export {
   displayElem,

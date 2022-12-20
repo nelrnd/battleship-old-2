@@ -160,11 +160,11 @@ export class Grid {
     }
   }
 
-  allShipsAreSunk() {
+  get allShipsAreSunk() {
     return this.placedShips.every((ship) => ship.isSunk);
   }
 
-  allShipsArePlaced() {
+  get allShipsArePlaced() {
     return (
       this.placedShips.length === 5 &&
       this.placedShips.every((ship) => ship.isPlaced)

@@ -52,8 +52,11 @@ const startGame = () => {
   }
   // Set player 1 as first turn
   setFirstTurn();
-  // Make computer grid playable
-  //makePlayable();
+
+  // game loop
+  while (players[0].grid.allShipsAreSunk) {
+    playTurn(players[0]);
+  }
 };
 
 export {
